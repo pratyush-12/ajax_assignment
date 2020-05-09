@@ -6,6 +6,17 @@
 </head>
 <body>
 	<h3 align="center"> Details</h3>
-	<div class="detail"></div>
+	<table>
+	 	<thead>
+		    <tr>
+		      <th>Name</th>
+		      <th>Email</th> 
+		      <th>Message</th> 
+		      <th>Date</th>
+		    </tr>
+	  	</thead>
+	  	<tbody class="detail">
+	  	</tbody>
+	</table>
 </body>
 </html>
