@@ -9,43 +9,30 @@ $(document).ready(function() {
     className = "active";
     attr = $(this).attr("id");
     this.asc = !this.asc;
-    // FOR DESCENDING ORDER
-    if (!this.asc){
+    if (!this.asc) {
+      // FOR DESCENDING ORDER
       $(this).removeClass("active");
       $(this).addClass("nonactive");
       $(this).siblings().removeClass("nonactive");
       className = "nonactive";
-      $.ajax({
-        type: "POST",
-        url: "descending_call.php",
-        data:{column_name:attr},        
-        dataType: "json",              
-        success: function(response){ 
-          var item = "";
-          $.each( response, function( key, value ) {           
-            item = item + " <tr> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
-          });
-          $(".detail").empty();
-          $(".detail").append(item);
-        }
-      });
-    }else{
-      //  FOR ASCENDING ORDER
-      $.ajax({
-        type: "POST",
-        url: "ascending_call.php",
-        data:{column_name:attr},        
-        dataType: "json",              
-        success: function(response){ 
-          var item = ""; 
-          $.each( response, function( key, value ) {           
-            item = item + " <tr> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
-          });
-          $(".detail").empty();
-          $(".detail").append(item);
-        }
-      });
+      data1 = {desc_column_name:attr};
+    }else {
+      data1 = {asc_column_name:attr};
     }
+    $.ajax({
+      type: "GET",
+      url: "display.php",
+      data: data1,        
+      dataType: "json",              
+      success: function(response){ 
+        var item = ""; 
+        $.each( response, function( key, value ) {           
+          item = item + " <tr> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
+        });
+        $(".detail").empty();
+        $(".detail").append(item);
+      }
+    });
   });
 
   $(function doAjax() {
