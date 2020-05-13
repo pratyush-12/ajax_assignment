@@ -2,6 +2,7 @@ $(document).ready(function() {
   className = "";
   attr = "";
   col_name = "";
+  item = "";
 
   $('th').click(function(){
     $(this).addClass("active"); 
@@ -15,24 +16,11 @@ $(document).ready(function() {
       $(this).addClass("nonactive");
       $(this).siblings().removeClass("nonactive");
       className = "nonactive";
-      data1 = {desc_column_name:attr};
+      var click_data = {desc_column_name:attr};
     }else {
-      data1 = {asc_column_name:attr};
+      click_data = {asc_column_name:attr};
     }
-    $.ajax({
-      type: "GET",
-      url: "display.php",
-      data: data1,        
-      dataType: "json",              
-      success: function(response){ 
-        var item = ""; 
-        $.each( response, function( key, value ) {           
-          item = item + " <tr> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
-        });
-        $(".detail").empty();
-        $(".detail").append(item);
-      }
-    });
+    callAjax(click_data);
   });
 
   $(function doAjax() {
@@ -43,32 +31,27 @@ $(document).ready(function() {
       col_name = "";
       order = "";
     }
+    var data = {column_name:col_name,sort_by:order};
+    // $(".detail").empty();
+    callAjax(data);
+    setInterval(function() { doAjax(); }, 10000);
+  });
+  
+  function callAjax(data){
     $.ajax({
       type: "GET",
-      url: "display.php",    
-      data: {column_name:col_name,sort_by:order},
+      url: "display.php",
+      data: data,        
       dataType: "json",              
-      success: function(response){    
-        newitem = "";
+      success: function(response){ 
         $.each( response, function( key, value ) {           
-          newitem = newitem + " <tr> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
-        });
+          item = item + " <tr> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
+        });      
         $(".detail").empty();
-        $(".detail").append(newitem);
-        setInterval(function() { doAjax(); }, 10000);
+        $(".detail").append(item);
+        item = ""
       }
     });
-  });
-
-  function comparer(index) {
-    return function(a, b) {
-      var valA = getCellValue(a, index), valB = getCellValue(b, index);
-      return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
-    }
-  }
-
-  function getCellValue(row, index){ 
-    return $(row).children('td').eq(index).text();
   }
 
 });
