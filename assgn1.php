@@ -5,14 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="css/assgn1.css">
 </head>
 <body>
-	<h3 align="center"> Details</h3>
+	<h3 align="center">Details</h3>
 	<table>
 	 	<thead>
 		    <tr>
-		      <th>Name</th>
-		      <th>Email</th> 
-		      <th>Message</th> 
-		      <th>Date</th>
+		      <th id="name">Name</th>
+		      <th id="email">Email</th> 
+		      <th id="message">Message</th> 
+		      <th id="date">Date</th>
 		    </tr>
 	  	</thead>
 	  	<tbody class="detail">

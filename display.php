@@ -1,7 +1,12 @@
 <?php
-$con=mysqli_connect("localhost","root","","samples"); 
+$con=mysqli_connect("localhost","team_magento","team_magento@123","team_magento_new_joinee_pratyush"); 
 $result = array();
-$query=mysqli_query($con,"select * from student ORDER BY id DESC LIMIT 5");
+if ($_REQUEST['column_name'] != "" && $_REQUEST['sort_by'] != "") {
+	$query=mysqli_query($con,"select * from student ORDER BY ".$_REQUEST['column_name']." ".$_REQUEST['sort_by']." LIMIT 5");
+}else{
+	$query=mysqli_query($con,"select * from student ORDER BY id ASC LIMIT 5");
+}
+
 while($row = $query->fetch_object()) {
     $result[] = $row;
 }
