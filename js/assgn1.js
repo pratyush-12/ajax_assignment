@@ -3,40 +3,47 @@ $(document).ready(function() {
   attr = "";
   col_name = "";
   item = "";
+  doAjax("noclick");
 
-  $('th').click(function(){
-    $(this).addClass("active"); 
-    $(this).siblings().removeClass("active"); 
-    className = "active";
+  function doAjax(parameter) {
+    if(parameter == "noclick"){
+        if (attr != "") {
+          col_name = attr;
+          order = className;
+        }else{
+          col_name = "";
+          order = "";
+        }
+        var data = {column_name:col_name,sort_by:order};
+        callAjax(data);
+        setInterval(function() { doAjax("noclick"); }, 10000);
+    }
+    else{
+      var id_clicked = "#"+parameter;
+      $(id_clicked).addClass("active");
+      $(id_clicked).siblings().removeClass("active"); 
+      className = "active";
+      attr = $(id_clicked).attr("id");
+      this.asc = !this.asc;
+      if (!this.asc) {
+      //   // FOR DESCENDING ORDER
+        $(id_clicked).removeClass("active");
+        $(id_clicked).addClass("nonactive");
+        $(id_clicked).siblings().removeClass("nonactive");
+        className = "nonactive";
+        var click_data = {desc_column_name:attr};
+      }else {
+        click_data = {asc_column_name:attr};
+      }
+      callAjax(click_data);
+    }
+  }
+
+   $('th').click(function(){
     attr = $(this).attr("id");
-    this.asc = !this.asc;
-    if (!this.asc) {
-      // FOR DESCENDING ORDER
-      $(this).removeClass("active");
-      $(this).addClass("nonactive");
-      $(this).siblings().removeClass("nonactive");
-      className = "nonactive";
-      var click_data = {desc_column_name:attr};
-    }else {
-      click_data = {asc_column_name:attr};
-    }
-    callAjax(click_data);
+    doAjax(attr);
   });
 
-  $(function doAjax() {
-    if (attr != "") {
-      col_name = attr;
-      order = className;
-    }else{
-      col_name = "";
-      order = "";
-    }
-    var data = {column_name:col_name,sort_by:order};
-    // $(".detail").empty();
-    callAjax(data);
-    setInterval(function() { doAjax(); }, 10000);
-  });
-  
   function callAjax(data){
     $.ajax({
       type: "GET",
