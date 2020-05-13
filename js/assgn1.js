@@ -1,49 +1,34 @@
 $(document).ready(function() { 
-  className = "";
   attr = "";
   col_name = "";
   item = "";
-  doAjax("noclick");
+  doAjax("","");
 
-  function doAjax(parameter) {
-    if(parameter == "noclick"){
-        if (attr != "") {
-          col_name = attr;
-          order = className;
-        }else{
-          col_name = "";
-          order = "";
-        }
-        var data = {column_name:col_name,sort_by:order};
-        callAjax(data);
-        setInterval(function() { doAjax("noclick"); }, 10000);
-    }
-    else{
-      var id_clicked = "#"+parameter;
-      $(id_clicked).addClass("active");
-      $(id_clicked).siblings().removeClass("active"); 
-      className = "active";
-      attr = $(id_clicked).attr("id");
-      this.asc = !this.asc;
-      if (!this.asc) {
-      //   // FOR DESCENDING ORDER
-        $(id_clicked).removeClass("active");
-        $(id_clicked).addClass("nonactive");
-        $(id_clicked).siblings().removeClass("nonactive");
-        className = "nonactive";
-        var click_data = {desc_column_name:attr};
-      }else {
-        click_data = {asc_column_name:attr};
-      }
-      callAjax(click_data);
-    }
-  }
-
-   $('th').click(function(){
+  $('th').click(function(){
     attr = $(this).attr("id");
-    doAjax(attr);
+    this.asc = !this.asc;
+     if (!this.asc) {
+     // FOR DESCENDING ORDER
+      order = "DESC";
+    }else{
+      order = "ASC";
+    }
+    doAjax(attr,order);
   });
 
+  function doAjax(attr,order) {
+    if (attr != "" && order != "") {
+      col_name = attr;
+      order_by = order;
+    }else{
+      col_name = "";
+      order_by = "";
+    }
+    var data = {column_name:col_name,sort_by:order_by};
+    callAjax(data);
+    setInterval(function() { doAjax(col_name,order_by); }, 10000);
+  }
+  
   function callAjax(data){
     $.ajax({
       type: "GET",
