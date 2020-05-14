@@ -9,3 +9,10 @@ table {
 th {
     cursor: pointer;
 }
+li:hover {
+	cursor: pointer;
+}
+.active {
+	background-color: skyblue;
+	color: white;
+}

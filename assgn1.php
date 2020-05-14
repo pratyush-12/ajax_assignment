@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <head>  
 	<script src="js/jquery-3.5.1.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<script src="js/assgn1.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/assgn1.css">
 </head>
 <body>
 	<h3 align="center">Details</h3>
-	<table>
+	<table id="mytable">
 	 	<thead>
 		    <tr>
 		      <th id="name">Name</th>
@@ -18,5 +20,10 @@
 	  	<tbody class="detail">
 	  	</tbody>
 	</table>
+	<div class="pagination-container">
+		<nav>
+			<ul class="pagination"></ul>
+		</nav>
+	</div>
 </body>
 </html>
