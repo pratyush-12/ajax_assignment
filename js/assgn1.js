@@ -1,11 +1,17 @@
 $(document).ready(function() { 
   
-  attr = "";  col_name = "";  pagenum = 1;  maxRows = 3;  pageNum = 1;  totalRows = 10;  result_array = [];
+  attr = ""; order = "";   pagenum = 1;  maxRows = 3;  pageNum = 1; totalRows = "";   
   doAjax("","",pageNum);
+  
+  $('#maxRows').change(function() {
+    totalRows = $(this).val();
+    $('[data-page = 1]').trigger("click");
+    doAjax(attr,order,pageNum,totalRows);
+    doPagination(1,totalRows);
+  });
     
-  function doPagination(clickedPage) {
-    maxRows = 3;
-    totalRows = 10;
+  function doPagination(clickedPage,totalRows=5) {
+    // maxRows = 3;
     $('.pagination').html('');
     pagenum = Math.ceil(totalRows / maxRows);
     for(var i=1; i<=pagenum;){
@@ -17,7 +23,9 @@ $(document).ready(function() {
     }
     $('.pagination li').click(function() {
       pageNum = $(this).attr('data-page');
-      doAjax("","",pageNum);
+      (attr != "") ? attr=attr : attr="";
+      (order != "") ? order=order : order="";
+      doAjax(attr,order,pageNum,totalRows);
     });
   }
 
@@ -30,18 +38,20 @@ $(document).ready(function() {
     }else{
       order = "ASC";
     }
-    doAjax(attr,order,pageNum);
+    (totalRows != "") ? doAjax(attr,order,pageNum,totalRows) : doAjax(attr,order,pageNum);
   });
 
-  function doAjax(attr,order,pageNo) {
+  function doAjax(attr,order,pageNo,totalRows=5) {
     if (attr != "" && order != "") {
       col_name = attr;
       order_by = order;
+      limit_by = totalRows;
     }else{
       col_name = "";
       order_by = "";
+      limit_by = totalRows;
     }
-    var data = {column_name:col_name,sort_by:order_by};
+    var data = {column_name:col_name,sort_by:order_by,limit:limit_by};
     callAjax(data,pageNo);
     // setInterval(function() { doAjax(col_name,order_by); $('.active').trigger("click"); }, 5000);
   }
@@ -53,6 +63,7 @@ $(document).ready(function() {
       data: data,        
       dataType: "json",              
       success: function(response){ 
+        result_array = [];
         $.each( response, function( key, value ) {     
           result_array[key] = " <tr id='"+ key +"''> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
         });   
@@ -72,7 +83,7 @@ $(document).ready(function() {
         $(".detail").empty();
         $(".detail").append(result_item);
         result_item = "";
-        doPagination(pageNo);        
+        doPagination(pageNo,totalRows);        
       }
     });
   }
