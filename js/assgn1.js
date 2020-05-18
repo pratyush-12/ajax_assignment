@@ -1,17 +1,15 @@
 $(document).ready(function() { 
   
-  attr = ""; order = "";   pagenum = 1;  maxRows = 3;  pageNum = 1; totalRows = "";   
+  attr = ""; order = "";  pageNum = 1;    
+  maxRows = $('#maxRows').val();  
   doAjax("","",pageNum);
   
   $('#maxRows').change(function() {
-    totalRows = $(this).val();
-    $('[data-page = 1]').trigger("click");
-    doAjax(attr,order,pageNum,totalRows);
-    doPagination(1,totalRows);
+    maxRows = $(this).val();
+    $('[data-page=1]').trigger("click");
   });
     
-  function doPagination(clickedPage,totalRows=5) {
-    // maxRows = 3;
+  function doPagination(clickedPage) {
     $('.pagination').html('');
     pagenum = Math.ceil(totalRows / maxRows);
     for(var i=1; i<=pagenum;){
@@ -67,6 +65,8 @@ $(document).ready(function() {
         $.each( response, function( key, value ) {     
           result_array[key] = " <tr id='"+ key +"''> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
         });   
+        $('#totalRows').val(result_array.length);
+        totalRows = $('#totalRows').val();
         var result_item = "";  
         if(pageNo == 1){
           for(var k = 0; k < maxRows; k++){
