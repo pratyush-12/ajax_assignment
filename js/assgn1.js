@@ -1,6 +1,6 @@
 $(document).ready(function() { 
-  
-  attr = ""; order = "";  pageNum = 1;    
+
+  attr = ""; order = "";  pageNum = 1; xhr = ""; pageNo="";
   maxRows = $('#maxRows').val();  
   doAjax("","",pageNum);
   
@@ -18,6 +18,7 @@ $(document).ready(function() {
     if(clickedPage){
       $('.pagination li').removeClass('active');
       $('[data-page="'+clickedPage+'"]').addClass('active');
+      // $('[data-page="'+clickedPage+'"]').trigger("click");
     }
     $('.pagination li').click(function() {
       pageNum = $(this).attr('data-page');
@@ -49,13 +50,19 @@ $(document).ready(function() {
       order_by = "";
       limit_by = totalRows;
     }
+    
     var data = {column_name:col_name,sort_by:order_by,limit:limit_by};
     callAjax(data,pageNo);
-    // setInterval(function() { doAjax(col_name,order_by); $('.active').trigger("click"); }, 5000);
+
+    setInterval(function() { 
+      doAjax(attr,order,pageNo,totalRows);
+       }, 5000);
+ 
   }
   
+  
   function callAjax(data,pageNo){
-    $.ajax({
+    xhr = $.ajax({
       type: "GET",
       url: "display.php",
       data: data,        
@@ -65,6 +72,7 @@ $(document).ready(function() {
         $.each( response, function( key, value ) {     
           result_array[key] = " <tr id='"+ key +"''> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
         });   
+        // console.log(result_array);
         $('#totalRows').val(result_array.length);
         totalRows = $('#totalRows').val();
         var result_item = "";  
@@ -82,12 +90,12 @@ $(document).ready(function() {
         }
         $(".detail").empty();
         $(".detail").append(result_item);
+        
         result_item = "";
         doPagination(pageNo,totalRows);        
       }
     });
   }
-
 });
 
     
