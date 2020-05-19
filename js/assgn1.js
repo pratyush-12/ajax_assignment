@@ -1,6 +1,5 @@
 $(document).ready(function() { 
-
-  attr = ""; order = "";  pageNum = 1; xhr = ""; pageNo="";
+  attr = ""; order = "";  pageNum = 1; pageNo=1;
   maxRows = $('#maxRows').val();  
   doAjax("","",pageNum);
   
@@ -9,7 +8,7 @@ $(document).ready(function() {
     $('[data-page=1]').trigger("click");
   });
     
-  function doPagination(clickedPage) {
+  function doPagination(clickedPage,totalRows=5) {
     $('.pagination').html('');
     pagenum = Math.ceil(totalRows / maxRows);
     for(var i=1; i<=pagenum;){
@@ -18,10 +17,10 @@ $(document).ready(function() {
     if(clickedPage){
       $('.pagination li').removeClass('active');
       $('[data-page="'+clickedPage+'"]').addClass('active');
-      // $('[data-page="'+clickedPage+'"]').trigger("click");
     }
     $('.pagination li').click(function() {
       pageNum = $(this).attr('data-page');
+
       (attr != "") ? attr=attr : attr="";
       (order != "") ? order=order : order="";
       doAjax(attr,order,pageNum,totalRows);
@@ -39,7 +38,7 @@ $(document).ready(function() {
     }
     (totalRows != "") ? doAjax(attr,order,pageNum,totalRows) : doAjax(attr,order,pageNum);
   });
-
+              
   function doAjax(attr,order,pageNo,totalRows=5) {
     if (attr != "" && order != "") {
       col_name = attr;
@@ -49,15 +48,9 @@ $(document).ready(function() {
       col_name = "";
       order_by = "";
       limit_by = totalRows;
-    }
-    
+    }    
     var data = {column_name:col_name,sort_by:order_by,limit:limit_by};
     callAjax(data,pageNo);
-
-    setInterval(function() { 
-      doAjax(attr,order,pageNo,totalRows);
-       }, 5000);
- 
   }
   
   
@@ -72,7 +65,6 @@ $(document).ready(function() {
         $.each( response, function( key, value ) {     
           result_array[key] = " <tr id='"+ key +"''> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
         });   
-        // console.log(result_array);
         $('#totalRows').val(result_array.length);
         totalRows = $('#totalRows').val();
         var result_item = "";  
@@ -88,14 +80,19 @@ $(document).ready(function() {
             result_item =  result_item + result_array[j];
           }
         }
-        $(".detail").empty();
+
+        $(".detail").empty();                          
         $(".detail").append(result_item);
-        
         result_item = "";
         doPagination(pageNo,totalRows);        
       }
     });
   }
+
+  setInterval(function() {
+    pageNo = $('.active').attr('data-page');
+    doAjax(attr,order,pageNo,totalRows);   
+  }, 5000);
 });
 
     
