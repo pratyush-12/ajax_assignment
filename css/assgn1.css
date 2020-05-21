@@ -1,10 +1,7 @@
-table, th, td {
-	border: 1px solid black;
-  	border-collapse: collapse;
-}
 table {
 	margin-left: auto;
 	margin-right: auto;
+	text-align: center;
 }
 th {
     cursor: pointer;
@@ -15,4 +12,13 @@ li:hover {
 .active {
 	background-color: skyblue;
 	color: white;
+}
+.sort-active {
+	color: skyblue;
+}
+.form-group {
+	margin-top: 5px;
+}
+#maxRows {
+	width: 12%;
 }

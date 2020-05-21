@@ -10,32 +10,33 @@
 
 	<div class="container">
 		<div class="form-group">
-			<lable>Select number of rows:</lable>     
-			<select name="state" id="maxRows" class="form-control-sm">
-				 <option value="5" selected="selected">5</option>
+		    <label>Select number of rows:</label>
+		    <select class="form-control form-control-sm" id="maxRows">
+		      	<option value="5" selected="selected">5</option>
 				<option value="10">10</option>
 				<option value="15">15</option>
 				<option value="20">20</option>
-			</select>
-		</div>	
-	</div> 
+		    </select>
+		</div>
+	</div>
 	<h3 align="center">Details</h3>
 	<p id="totalRows"></p>
-	<table id="mytable">
+	<table id="mytable" class="table-sm table-striped table-bordered">
 	 	<thead>
 		    <tr>
-		      <th id="name">Name</th>
-		      <th id="email">Email</th> 
-		      <th id="message">Message</th> 
-		      <th id="date">Date</th>
+		      <th scope="col" id="name">Name</th>
+		      <th scope="col" id="email">Email</th> 
+		      <th scope="col" id="message">Message</th> 
+		      <th scope="col" id="date">Date</th>
 		    </tr>
 	  	</thead>
 	  	<tbody class="detail">
 	  	</tbody>
 	</table>
+	<br><br>
 	<div class="pagination-container">
 		<nav>
-			<ul class="pagination"></ul>
+			<ul class="pagination justify-content-center"></ul>
 		</nav>
 	</div>
 </body>

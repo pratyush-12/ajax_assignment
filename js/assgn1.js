@@ -28,6 +28,8 @@ $(document).ready(function() {
   }
 
   $('th').click(function(){
+    $(this).addClass('sort-active');
+    $(this).siblings().removeClass('sort-active');
     attr = $(this).attr("id");
     this.asc = !this.asc;
      if (!this.asc) {
@@ -65,7 +67,7 @@ $(document).ready(function() {
         delete response["total"];
         result_array = [];
         $.each( response, function( key, value ) {     
-          result_array[key] = " <tr id='"+ key +"''> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
+          result_array[key] = " <tr scope='row' id='"+ key +"''> <td>" +value.name + "</td> <td>"+value.email +"</td> <td>"+value.message +"</td> <td>"+value.date +"</td> </tr>";               
         });
         var result_item = "";        
         if(pageNum == 1){
