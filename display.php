@@ -16,10 +16,11 @@ if(@$_POST['name'] != "" && @$_POST['email'] != "" && @$_POST['message'] != "" &
 
 	if(mysqli_query($con,"INSERT INTO student(name,email,message,date) VALUES ('" .$_POST['name']. "','" .$_POST['email']. "','" .$_POST['message']. "','" .$_POST['date']. "')"))
 	{
-		echo "Successfull";
+		$response['msg'] = "Successfull";
 	}else{
-		echo "Unsuccessfull";
+		$response['msg'] = "Unsuccessfull";
 	}
+	echo json_encode($response);
 	exit;
 }
 

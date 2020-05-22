@@ -59,7 +59,6 @@ $(document).ready(function() {
     callAjax(data,pageNum);
   }
   
-  
   function callAjax(data,pageNum){
     $.ajax({
       type: "GET",
@@ -85,7 +84,6 @@ $(document).ready(function() {
           for(var j = start; j < end; j++){
             result_item =  result_item + result_array[j];
           }
-
         }
         $(".detail").empty();                          
         $(".detail").append(result_item);
@@ -106,21 +104,35 @@ $(document).ready(function() {
       error = 1;
       $('#name_error').show();
     }
+    else{
+      error = 0;
+      $('#name_error').hide();
+    }
     if(user_email == ""){
       error = 1;
       $('#email_error').show();
-    }else if(IsEmail(user_email) == false){
+    }
+    else if(IsEmail(user_email) == false){
       error = 1;
       $('#email_error').hide();
       $('#email_invalid').show();
+    }else{
+      error = 0;
+      $('#email_invalid').hide();
     }
     if(user_message == ""){
       error = 1;
       $('#message_error').show();
+    }else{
+      error = 0;
+      $('#message_error').hide();
     }
     if(user_date == ""){
       error = 1;
       $('#date_error').show();
+    }else{
+      error = 0;
+      $('#date_error').hide();
     }
     if(error != 1){
       var AddData = {name:user_name,email:user_email,message:user_message,date:user_date};
@@ -129,7 +141,7 @@ $(document).ready(function() {
   });
 
   function IsEmail(email) {
-      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;      
       if(!regex.test(email)) {
         return false;
       }else{
@@ -142,9 +154,9 @@ $(document).ready(function() {
       type: "POST",
       url: "display.php",
       data: AddData,
-      dataType: "text",                
+      dataType: "json",                
       success: function(message){
-        if (message = "Successfull") {
+        if (message.msg = "Successfull") {
           $('#success_message').show();
           setTimeout(function() { $("#success_message").hide(); }, 8000);
         } else {
