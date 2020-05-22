@@ -2,7 +2,11 @@ $(document).ready(function() {
   attr = ""; order = "";  pageNum = 1; 
   maxRows = $('#maxRows').val();  
   doAjax(attr,order,maxRows,pageNum);
-    
+
+  $('#user_date').datepicker({
+    format: 'yyyy/mm/dd'
+ });
+
   $('#maxRows').change(function() {
     maxRows = $(this).val();
     doAjax(attr,order,maxRows);
@@ -87,6 +91,66 @@ $(document).ready(function() {
         $(".detail").append(result_item);
         result_item = "";
         doPagination(maxRows,totalRows,pageNum);        
+      }
+    });
+  }
+
+  $('#modalSubmit').click(function(event){  
+    event.preventDefault();
+    var user_name = $('#user_name').val();
+    var user_email = $('#user_email').val();
+    var user_message = $('#user_message').val();
+    var user_date = $('#user_date').val();
+    var error = 0;
+    if (user_name == "") {
+      error = 1;
+      $('#name_error').show();
+    }
+    if(user_email == ""){
+      error = 1;
+      $('#email_error').show();
+    }else if(IsEmail(user_email) == false){
+      error = 1;
+      $('#email_error').hide();
+      $('#email_invalid').show();
+    }
+    if(user_message == ""){
+      error = 1;
+      $('#message_error').show();
+    }
+    if(user_date == ""){
+      error = 1;
+      $('#date_error').show();
+    }
+    if(error != 1){
+      var AddData = {name:user_name,email:user_email,message:user_message,date:user_date};
+      addRecord(AddData);
+    }
+  });
+
+  function IsEmail(email) {
+      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(!regex.test(email)) {
+        return false;
+      }else{
+        return true;
+      }
+  }
+
+  function addRecord(AddData) {
+    $.ajax({
+      type: "POST",
+      url: "display.php",
+      data: AddData,
+      dataType: "text",                
+      success: function(message){
+        if (message = "Successfull") {
+          $('#success_message').show();
+          setTimeout(function() { $("#success_message").hide(); }, 8000);
+        } else {
+          alert("failed");
+        } 
+        $('.close').trigger('click');
       }
     });
   }
