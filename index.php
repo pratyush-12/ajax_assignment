@@ -58,23 +58,23 @@
 		      	<form id="AddForm">
 		      		<div class="form-group">
 					    <label for="name">Name</label>
-					    <input type="text" class="form-control form-control" id="user_name" aria-describedby="user_name" placeholder="Enter Name">
+					    <input type="text" class="form-control modalInput" id="user_name" aria-describedby="user_name" placeholder="Enter Name">
 					    <p class="modal-error" id="name_error">* Please enter name</p>
 					</div>
 					<div class="form-group">
 					    <label for="email">Email</label>
-					    <input type="email" class="form-control" id="user_email" aria-describedby="user_email" placeholder="Enter Email">
+					    <input type="email" class="form-control modalInput" id="user_email" aria-describedby="user_email" placeholder="Enter Email">
 					    <p class="modal-error" id="email_error">* Please enter email</p>
 					    <p class="modal-error" id="email_invalid">* Please enter valid email</p>
 					</div>
 					<div class="form-group">
 					    <label for="message">Message</label>
-					    <input type="text" class="form-control" id="user_message" aria-describedby="user_message" placeholder="Enter Message">
+					    <input type="text" class="form-control modalInput" id="user_message" aria-describedby="user_message" placeholder="Enter Message">
 					    <p class="modal-error" id="message_error">* Please enter message</p>
 					</div>
 					<div class="form-group">
 					    <label for="date">Date</label>
-					    <input type="text" class="form-control" id="user_date" aria-describedby="user_date" placeholder="Enter Date">
+					    <input type="text" class="form-control modalInput" id="user_date" aria-describedby="user_date" placeholder="Enter Date">
 					    <p class="modal-error" id="date_error">* Please enter date</p>
 					</div>					  
 					<button id="modalSubmit" type="submit" class="btn btn-primary">Submit</button>
