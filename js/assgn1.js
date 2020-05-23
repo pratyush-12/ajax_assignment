@@ -1,12 +1,10 @@
 $(document).ready(function() { 
-  attr = ""; order = "";  pageNum = 1; 
+  attr = ""; order = "";  pageNum = 1; error = 1;
   maxRows = $('#maxRows').val();  
   doAjax(attr,order,maxRows,pageNum);
-
   $('#user_date').datepicker({
     format: 'yyyy/mm/dd'
- });
-
+  });
   $('#maxRows').change(function() {
     maxRows = $(this).val();
     doAjax(attr,order,maxRows);
@@ -93,53 +91,66 @@ $(document).ready(function() {
     });
   }
 
-  $('#modalSubmit').click(function(event){  
-    event.preventDefault();
-    var user_name = $('#user_name').val();
-    var user_email = $('#user_email').val();
-    var user_message = $('#user_message').val();
-    var user_date = $('#user_date').val();
-    var error = 0;
-    if (user_name == "") {
+  $('#user_name').focusout(function(){
+    if($(this).val() == ""){
       error = 1;
       $('#name_error').show();
-    }
-    else{
+    }else{
       error = 0;
       $('#name_error').hide();
     }
-    if(user_email == ""){
+  });
+  $('#user_email').focusout(function(){
+    if($(this).val() == ""){
       error = 1;
       $('#email_error').show();
+      $('#email_invalid').hide();
     }
-    else if(IsEmail(user_email) == false){
+    else if(IsEmail($(this).val()) == false){
       error = 1;
       $('#email_error').hide();
       $('#email_invalid').show();
-    }else{
+    }
+    else{
       error = 0;
+      $('#email_error').hide();
       $('#email_invalid').hide();
     }
-    if(user_message == ""){
+  });
+  $('#user_message').focusout(function(){
+    if($(this).val() == ""){
       error = 1;
       $('#message_error').show();
     }else{
       error = 0;
       $('#message_error').hide();
     }
-    if(user_date == ""){
+  });
+  $('#user_date').focusout(function(){
+    if($(this).val() == ""){
       error = 1;
       $('#date_error').show();
     }else{
       error = 0;
       $('#date_error').hide();
     }
-    if(error != 1){
-      var AddData = {name:user_name,email:user_email,message:user_message,date:user_date};
-      addRecord(AddData);
-    }
   });
 
+  $('#modalSubmit').click(function(event){  
+    var user_name = $('#user_name').val();
+    var user_email = $('#user_email').val();
+    var user_message = $('#user_message').val();
+    var user_date = $('#user_date').val();
+    event.preventDefault();
+    if(error == 1){
+      $('#TopError').show();
+      setTimeout(function() { $("#TopError").fadeOut(); }, 4000);
+    }else{
+      var AddData = {name:user_name,email:user_email,message:user_message,date:user_date};
+      addRecord(AddData);
+      $('.form-control').val('');
+    }
+  });
   function IsEmail(email) {
       var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;      
       if(!regex.test(email)) {

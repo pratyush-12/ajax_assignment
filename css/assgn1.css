@@ -44,3 +44,8 @@ li:hover {
 #AddButton {
 	margin-left: 132px;
 }
+#TopError {
+	color: red;
+	margin: auto;
+	display: none;
+}

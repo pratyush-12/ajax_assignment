@@ -53,6 +53,7 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		    </div>
+		    <p id="TopError">Please fill all the details</p>
 		    <div class="modal-body">
 		      	<form id="AddForm">
 		      		<div class="form-group">
