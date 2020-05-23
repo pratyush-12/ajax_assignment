@@ -1,7 +1,9 @@
 table {
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 30px;
 	text-align: center;
+	width: 35%;
 }
 th {
     cursor: pointer;
@@ -21,4 +23,29 @@ li:hover {
 }
 #maxRows {
 	width: 12%;
+}
+.form-control {
+	margin-right: 104px;
+	margin-top: 10px;
+   	display: inline; 
+}
+.filter-row {
+	margin-left: 314px;
+}
+.modal-error {
+	display: none;
+	color: red;
+}
+#success_message {
+	width:35%;
+	margin: auto;
+	display: none;
+}
+#AddButton {
+	margin-left: 132px;
+}
+#TopError {
+	color: red;
+	margin: auto;
+	display: none;
 }
