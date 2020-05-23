@@ -1,7 +1,5 @@
 <?php
 $con=mysqli_connect("localhost","team_magento","team_magento@123","team_magento_new_joinee_pratyush");
-// $con=mysqli_connect("localhost","root","","samples"); 
-
 $query = ""; 
 $result = array();
 
